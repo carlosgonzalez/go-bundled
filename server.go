@@ -54,7 +54,7 @@ func main() {
 	postHandler := handlers.NewPostHandler(db)
 
 	//-------------------
-	// Endpoints
+	// Endpoints REST API
 	//-------------------
 
 	e.GET("/", func(c echo.Context) error {
@@ -66,6 +66,10 @@ func main() {
 	e.GET("/users/:id", userHandler.GetUser)
 	e.PUT("/users/:id", userHandler.UpdateUser)
 	e.DELETE("/users/:id", userHandler.DeleteUser)
+
+	//-------------------
+	// Endpoints RPC
+	//-------------------
 
 	e.POST("/fetch-posts", postHandler.CreatePost)
 
