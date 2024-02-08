@@ -3,10 +3,10 @@ package main
 import (
 	"net/http"
 
-	"github.com/carlosgonzalez/learning-go/handlers"
-	"github.com/carlosgonzalez/learning-go/middlewares"
-	"github.com/carlosgonzalez/learning-go/models"
-	"github.com/carlosgonzalez/learning-go/services"
+	"github.com/carlosgonzalez/learning-go/internal/handlers"
+	"github.com/carlosgonzalez/learning-go/internal/middlewares"
+	"github.com/carlosgonzalez/learning-go/internal/models"
+	"github.com/carlosgonzalez/learning-go/pkg/validators"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/driver/sqlite"
@@ -42,7 +42,7 @@ func main() {
 	//-------------------
 	// Validator
 	//-------------------
-	e.Validator = services.NewCustomValidator()
+	e.Validator = validators.NewCustomValidator()
 
 	//-------------------
 	// Middlewares

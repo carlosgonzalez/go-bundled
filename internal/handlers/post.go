@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/carlosgonzalez/learning-go/models"
-	"github.com/carlosgonzalez/learning-go/services"
+	"github.com/carlosgonzalez/learning-go/internal/models"
+	"github.com/carlosgonzalez/learning-go/internal/services"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
