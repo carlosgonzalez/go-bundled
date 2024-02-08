@@ -6,10 +6,11 @@ import (
 	"io"
 	"log"
 	"math/rand"
-	"myapp/models"
 	"net/http"
 	"os"
 	"sync"
+
+	"github.com/carlosgonzalez/learning-go/models"
 )
 
 func Fetcher(resource string, totalRecords int) ([]models.Post, error) {

@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	"myapp/models"
 	"net/http"
+
+	"github.com/carlosgonzalez/learning-go/models"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"

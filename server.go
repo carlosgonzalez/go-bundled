@@ -3,10 +3,10 @@ package main
 import (
 	"net/http"
 
-	"myapp/handlers"
-	"myapp/middlewares"
-	"myapp/models"
-	"myapp/services"
+	"github.com/carlosgonzalez/learning-go/handlers"
+	"github.com/carlosgonzalez/learning-go/middlewares"
+	"github.com/carlosgonzalez/learning-go/models"
+	"github.com/carlosgonzalez/learning-go/services"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/driver/sqlite"

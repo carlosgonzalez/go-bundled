@@ -1,4 +1,4 @@
-module myapp
+module github.com/carlosgonzalez/learning-go
 
 go 1.22.0
 
