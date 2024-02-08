@@ -21,8 +21,14 @@ func main() {
 	}
 
 	// Migrate the schema
-	db.AutoMigrate(&models.User{})
-	db.AutoMigrate(&models.Post{})
+	err = db.AutoMigrate(&models.User{})
+	if err != nil {
+		panic("failed to migrate user model")
+	}
+	err = db.AutoMigrate(&models.Post{})
+	if err != nil {
+		panic("failed to migrate post model")
+	}
 
 	//-------------------
 	// Echo
