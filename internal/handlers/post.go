@@ -3,7 +3,6 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/carlosgonzalez/learning-go/internal/models"
 	"github.com/carlosgonzalez/learning-go/internal/services"
 
 	"github.com/labstack/echo/v4"
@@ -12,13 +11,11 @@ import (
 
 type postHandler struct {
 	db *gorm.DB
-	models.Post
 }
 
 func NewPostHandler(db *gorm.DB) *postHandler {
 	return &postHandler{
-		db:   db,
-		Post: models.Post{},
+		db: db,
 	}
 }
 

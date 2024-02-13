@@ -57,6 +57,7 @@ func fetchUrl(resource string, c chan models.Post, wg *sync.WaitGroup) {
 		os.Exit(1)
 	}
 
+	//to not mess with the autoincrementing ID from the DB
 	post.ID = 0
 
 	c <- post

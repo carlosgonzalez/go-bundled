@@ -4,51 +4,49 @@ import (
 	"net/http"
 
 	"github.com/carlosgonzalez/learning-go/internal/models"
+	"github.com/carlosgonzalez/learning-go/internal/repositories"
 
 	"github.com/labstack/echo/v4"
-	"gorm.io/gorm"
 )
 
 type userHandler struct {
-	db *gorm.DB
-	models.User
+	repo *repositories.UserRepository
 }
 
-func NewUserHandler(db *gorm.DB) *userHandler {
+func NewUserHandler(repo *repositories.UserRepository) *userHandler {
 	return &userHandler{
-		db:   db,
-		User: models.User{},
+		repo: repo,
 	}
 }
 
 func (uHandler *userHandler) CreateUser(c echo.Context) error {
 	u := &models.User{}
-
-	if err := c.Validate(u); err != nil {
-		return err
-	}
-
 	if err := c.Bind(u); err != nil {
 		return err
 	}
-
-	uHandler.db.Create(u)
+	if err := c.Validate(u); err != nil {
+		return err
+	}
+	err := uHandler.repo.CreateUser(u)
+	if err != nil {
+		c.Echo().Logger.Error(err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "unable to create user"})
+	}
 
 	return c.JSON(http.StatusCreated, u)
 }
 
 func (uHandler *userHandler) GetUser(c echo.Context) error {
-	var user models.User
-	if err := uHandler.db.First(&user, c.Param("id")).Error; err != nil {
+	err, user := uHandler.repo.GetUser(c.Param("id"))
+	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
 	}
-
 	return c.JSON(http.StatusOK, user)
 }
 
 func (uHandler *userHandler) UpdateUser(c echo.Context) error {
-	var existingUser models.User
-	if err := uHandler.db.First(&existingUser, c.Param("id")).Error; err != nil {
+	err, existingUser := uHandler.repo.GetUser(c.Param("id"))
+	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
 	}
 
@@ -57,25 +55,34 @@ func (uHandler *userHandler) UpdateUser(c echo.Context) error {
 		return err
 	}
 
-	uHandler.db.Model(&existingUser).Updates(models.User{Name: user.Name})
-	return c.JSON(http.StatusOK, existingUser)
+	err, u := uHandler.repo.UpdateUser(&existingUser, user)
+	if err != nil {
+		c.Echo().Logger.Error(err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "unable to update user"})
+	}
+	return c.JSON(http.StatusOK, u)
 }
 
 func (uHandler *userHandler) DeleteUser(c echo.Context) error {
-	var existingUser models.User
-	if err := uHandler.db.First(&existingUser, c.Param("id")).Error; err != nil {
+	err, existingUser := uHandler.repo.GetUser(c.Param("id"))
+	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
 	}
 
-	uHandler.db.Delete(&existingUser)
-
+	err = uHandler.repo.DeleteUser(&existingUser)
+	if err != nil {
+		c.Echo().Logger.Error(err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "unable to delete user"})
+	}
 	return c.NoContent(http.StatusNoContent)
 }
 
 func (uHandler *userHandler) GetAllUsers(c echo.Context) error {
 
-	users := []*models.User{}
-	uHandler.db.Find(&users)
+	err, users := uHandler.repo.GetAllUsers()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
+	}
 
 	return c.JSON(http.StatusOK, users)
 }

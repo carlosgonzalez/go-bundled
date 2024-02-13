@@ -6,6 +6,7 @@ import (
 	"github.com/carlosgonzalez/learning-go/internal/handlers"
 	"github.com/carlosgonzalez/learning-go/internal/middlewares"
 	"github.com/carlosgonzalez/learning-go/internal/models"
+	"github.com/carlosgonzalez/learning-go/internal/repositories"
 	"github.com/carlosgonzalez/learning-go/pkg/validators"
 
 	"github.com/labstack/echo/v4"
@@ -53,10 +54,16 @@ func main() {
 	e.Use(s.Process)
 
 	//-------------------
+	// Repositories
+	//-------------------
+
+	userRepository := repositories.NewUserRepository(db)
+
+	//-------------------
 	// Handlers
 	//-------------------
 
-	userHandler := handlers.NewUserHandler(db)
+	userHandler := handlers.NewUserHandler(userRepository)
 	postHandler := handlers.NewPostHandler(db)
 
 	//-------------------
