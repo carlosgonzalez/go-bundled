@@ -33,13 +33,9 @@ jobs:
       - name: Install dependencies
         run: go get .
       - name: Test with the Go CLI
-        run: go test ./...
-
-  coverage:
-    name: Update coverage report
-    runs-on: ubuntu-latest
-    steps:
-      - uses: ncruces/go-coverage-report@v0
+        run: go test -v ./...
+      - name: Update coverage report
+        uses: ncruces/go-coverage-report@v0
         with:
           report: true
           chart: true
