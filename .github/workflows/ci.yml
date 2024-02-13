@@ -32,7 +32,18 @@ jobs:
           go-version: "1.22"
       - name: Install dependencies
         run: go get .
-      - name: Build
-        run: go build -v ./...
       - name: Test with the Go CLI
         run: go test ./...
+
+  coverage:
+    name: Update coverage report
+    steps: 
+      - uses: ncruces/go-coverage-report@v0
+        with:
+          report: true
+          chart: true
+          amend: true
+        if: |
+          matrix.os == 'ubuntu-latest' &&
+          github.event_name == 'push'  
+        continue-on-error: true
