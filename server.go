@@ -10,13 +10,15 @@ import (
 	"github.com/carlosgonzalez/learning-go/pkg/validators"
 
 	"github.com/labstack/echo/v4"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func main() {
 
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	// Read from env variable
+	dsn := "host=localhost user=postgres password=example dbname=postgres port=5432 sslmode=disable"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
