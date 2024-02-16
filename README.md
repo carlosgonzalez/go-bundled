@@ -35,13 +35,13 @@ Make sure you have Go installed on your system. If not, download it from [here](
 Clone this repository:
 
 ```bash
-git clone https://github.com/your-username/simple-golang-setup.git
+git clone git@github.com:carlosgonzalez/learning-go.git
 ```
 
 Navigate to the project directory:
 
 ```bash
-cd simple-golang-setup
+cd learning-go
 ```
 
 Install dependencies:
