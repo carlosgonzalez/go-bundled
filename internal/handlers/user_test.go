@@ -2,6 +2,7 @@ package handlers_test
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -16,17 +17,12 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-var userJSON = `{"name": "FooBar"}`
+var (
+	userJSON = `{"name": "FooBar"}`
+)
 
-func TestUserHandler_CreateUser(t *testing.T) {
-
-	//Setup
-	e := echo.New()
-	e.Validator = validators.NewCustomValidator()
-	req := httptest.NewRequest(http.MethodPost, "/users", strings.NewReader(userJSON))
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
+func TestUserHandler_CreateUserSucceedsForValidPayload(t *testing.T) {
+	c, rec := getContextForRoute("/users", http.MethodPost)
 
 	repo := &mocks.MockUserRepositoryInterface{}
 	repo.On("CreateUser", mock.AnythingOfType("*models.User")).
@@ -50,4 +46,33 @@ func TestUserHandler_CreateUser(t *testing.T) {
 		assert.Equal(t, expectedUser, actualUser)
 	}
 
+}
+
+func TestUserHandler_CreateUserFailsForInvalidPayload(t *testing.T) {
+
+	c, rec := getContextForRoute("/users", http.MethodPost)
+
+	repo := &mocks.MockUserRepositoryInterface{}
+	repo.On("CreateUser", mock.AnythingOfType("*models.User")).
+		Return(errors.New("something went wrong")).
+		Once()
+
+	handler := handlers.NewUserHandler(repo)
+
+	// Assertions
+	if assert.NoError(t, handler.CreateUser(c)) {
+		assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	}
+
+}
+
+func getContextForRoute(endpoint string, method string) (echo.Context, *httptest.ResponseRecorder) {
+	e := echo.New()
+	e.Validator = validators.NewCustomValidator()
+	req := httptest.NewRequest(http.MethodPost, "/users", strings.NewReader(userJSON))
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec := httptest.NewRecorder()
+	c := e.NewContext(req, rec)
+
+	return c, rec
 }
