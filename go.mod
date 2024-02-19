@@ -7,7 +7,6 @@ require (
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/stretchr/testify v1.8.4
-	github.com/test-go/testify v1.1.4
 	gorm.io/gorm v1.25.7
 )
 

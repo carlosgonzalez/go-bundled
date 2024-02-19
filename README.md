@@ -1,3 +1,5 @@
+[![CI](https://github.com/carlosgonzalez/learning-go/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/carlosgonzalez/learning-go/actions/workflows/ci.yml)
+
 # Simple Golang Setup for Newbies
 
 ## Description

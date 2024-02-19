@@ -49,7 +49,6 @@ func TestUserHandler_CreateUserSucceedsForValidPayload(t *testing.T) {
 }
 
 func TestUserHandler_CreateUserFailsForInvalidPayload(t *testing.T) {
-
 	c, rec := getContextForRoute("/users", http.MethodPost)
 
 	repo := &mocks.MockUserRepositoryInterface{}
