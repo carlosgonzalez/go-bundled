@@ -53,7 +53,7 @@ func (s *Suite) SetupSuite() {
 
 	require.NoError(s.T(), err)
 
-	s.repository = *repositories.NewUserRepository(s.DB)
+	s.repository = repositories.NewUserRepository(s.DB)
 }
 
 func (s *Suite) AfterTest(_, _ string) {

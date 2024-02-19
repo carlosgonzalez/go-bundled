@@ -20,9 +20,15 @@ Understand how to interact with databases using GORM, a powerful Go ORM library.
 
 Explore Go’s concurrency model by using channels and goroutines effectively.
 
-### Testing (WIP)
+## Project Structure
 
-Learn how to write unit tests for your Go code to ensure reliability.
+```
+
+```
+
+### Testing
+
+Learn how to write unit tests for your Go code to ensure reliability with Mockery.
 
 ### CI
 
@@ -50,9 +56,33 @@ Install dependencies:
 go mod tidy
 ```
 
+Mockery
+
+```bash
+go install github.com/vektra/mockery/v2@v2.42.0
+```
+
+Install `air` if you want to have live-reload capabilities
+
+```bash
+go install github.com/cosmtrek/air@latest
+```
+
 # Usage
 
 Run the application:
+
+```bash
+docker-compose up -d
+```
+
+if you have air installed, run:
+
+```bash
+air
+```
+
+otherwise simply run with
 
 ```bash
 go run .
