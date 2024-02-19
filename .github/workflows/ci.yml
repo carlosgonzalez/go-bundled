@@ -11,7 +11,6 @@ permissions:
 jobs:
   code-analysis:
     name: code analysis
-    needs: dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,7 +35,6 @@ jobs:
 
   unit-tests:
     name: unit tests
-    needs: dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
