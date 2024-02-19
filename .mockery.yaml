@@ -1,2 +1,5 @@
+dir: "mocks"
+mockname: "Mock{{.InterfaceName}}"
+outpkg: "mocks"
 packages:
-  github.com/carlosgonzalez/learning-go:
+  github.com/carlosgonzalez/learning-go/internal/repositories:

@@ -28,7 +28,7 @@ func TestUserHandler_CreateUser(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
-	repo := &mocks.UserRepositoryInterface{}
+	repo := &mocks.MockUserRepositoryInterface{}
 	repo.On("CreateUser", mock.AnythingOfType("*models.User")).
 		Return(nil).
 		Once()
