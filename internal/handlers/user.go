@@ -29,7 +29,6 @@ func (uHandler *userHandler) CreateUser(c echo.Context) error {
 	}
 	err := uHandler.repo.CreateUser(u)
 	if err != nil {
-		c.Echo().Logger.Error(err)
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "unable to create user"})
 	}
 
@@ -57,7 +56,6 @@ func (uHandler *userHandler) UpdateUser(c echo.Context) error {
 
 	err, u := uHandler.repo.UpdateUser(&existingUser, user)
 	if err != nil {
-		c.Echo().Logger.Error(err)
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "unable to update user"})
 	}
 	return c.JSON(http.StatusOK, u)
@@ -71,14 +69,12 @@ func (uHandler *userHandler) DeleteUser(c echo.Context) error {
 
 	err = uHandler.repo.DeleteUser(&existingUser)
 	if err != nil {
-		c.Echo().Logger.Error(err)
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "unable to delete user"})
 	}
 	return c.NoContent(http.StatusNoContent)
 }
 
 func (uHandler *userHandler) GetAllUsers(c echo.Context) error {
-
 	err, users := uHandler.repo.GetAllUsers()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})

@@ -27,7 +27,6 @@ func (uRepo UserRepository) GetUser(id string) (error, models.User) {
 func (uRepo UserRepository) GetAllUsers() (error, []*models.User) {
 	users := []*models.User{}
 	tx := uRepo.db.Find(&users)
-
 	if tx.Error != nil {
 		return tx.Error, nil
 	}
@@ -37,7 +36,6 @@ func (uRepo UserRepository) GetAllUsers() (error, []*models.User) {
 
 func (uRepo UserRepository) CreateUser(user *models.User) error {
 	tx := uRepo.db.Create(user)
-
 	if tx.Error != nil {
 		return tx.Error
 	}
