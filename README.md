@@ -1,6 +1,6 @@
 [![CI](https://github.com/carlosgonzalez/learning-go/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/carlosgonzalez/learning-go/actions/workflows/ci.yml)
 
-# Simple Golang Setup for Newbies
+# Simple Golang Setup with Echo, GORM and Testify
 
 ## Description
 
@@ -25,12 +25,37 @@ Explore Go’s concurrency model by using channels and goroutines effectively.
 ## Project Structure
 
 ```
+go-bundled/
+┣ .github/
+┃ ┣ workflows/
+┃ ┗ dependabot.yml
+┣ internal/
+┃ ┣ handlers/
+┃ ┣ middlewares/
+┃ ┣ models/
+┃ ┣ repositories/
+┃ ┗ services/
+┣ mocks/
+┃ ┗ mock_UserRepositoryInterface.go
+┣ pkg/
+┃ ┗ validators/
+┣ tmp/
+┃ ┣ build-errors.log
+┃ ┗ main
+┣ .air.toml
+┣ .gitignore
+┣ .mockery.yaml
+┣ README.md
+┣ docker-compose.yml
+┣ go.mod
+┣ go.sum
+┗ main.go
 
 ```
 
 ### Testing
 
-Learn how to write unit tests for your Go code to ensure reliability with Mockery.
+Learn how to write unit tests for your Go code to ensure reliability with Testify and mocks.
 
 ### CI
 
