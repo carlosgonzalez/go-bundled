@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/carlosgonzalez/learning-go/internal/services"
+	"github.com/carlosgonzalez/go-bundled/internal/services"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"

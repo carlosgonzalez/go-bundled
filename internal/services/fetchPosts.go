@@ -10,7 +10,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/carlosgonzalez/learning-go/internal/models"
+	"github.com/carlosgonzalez/go-bundled/internal/models"
 )
 
 func Fetcher(resource string, totalRecords int) ([]models.Post, error) {

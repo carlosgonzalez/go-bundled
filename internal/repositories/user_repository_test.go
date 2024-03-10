@@ -10,8 +10,8 @@ import (
 
 	sqlmock "github.com/DATA-DOG/go-sqlmock"
 
-	"github.com/carlosgonzalez/learning-go/internal/models"
-	"github.com/carlosgonzalez/learning-go/internal/repositories"
+	"github.com/carlosgonzalez/go-bundled/internal/models"
+	"github.com/carlosgonzalez/go-bundled/internal/repositories"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

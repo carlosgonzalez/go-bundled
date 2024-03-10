@@ -2,4 +2,4 @@ dir: "mocks"
 mockname: "Mock{{.InterfaceName}}"
 outpkg: "mocks"
 packages:
-  github.com/carlosgonzalez/learning-go/internal/repositories:
+  github.com/carlosgonzalez/go-bundled/internal/repositories:

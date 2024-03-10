@@ -3,11 +3,11 @@ package main
 import (
 	"net/http"
 
-	"github.com/carlosgonzalez/learning-go/internal/handlers"
-	"github.com/carlosgonzalez/learning-go/internal/middlewares"
-	"github.com/carlosgonzalez/learning-go/internal/models"
-	"github.com/carlosgonzalez/learning-go/internal/repositories"
-	"github.com/carlosgonzalez/learning-go/pkg/validators"
+	"github.com/carlosgonzalez/go-bundled/internal/handlers"
+	"github.com/carlosgonzalez/go-bundled/internal/middlewares"
+	"github.com/carlosgonzalez/go-bundled/internal/models"
+	"github.com/carlosgonzalez/go-bundled/internal/repositories"
+	"github.com/carlosgonzalez/go-bundled/pkg/validators"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/driver/postgres"

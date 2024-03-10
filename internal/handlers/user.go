@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/carlosgonzalez/learning-go/internal/models"
-	"github.com/carlosgonzalez/learning-go/internal/repositories"
+	"github.com/carlosgonzalez/go-bundled/internal/models"
+	"github.com/carlosgonzalez/go-bundled/internal/repositories"
 
 	"github.com/labstack/echo/v4"
 )

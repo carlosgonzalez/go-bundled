@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/carlosgonzalez/learning-go/internal/models"
+	"github.com/carlosgonzalez/go-bundled/internal/models"
 )
 
 type UserRepositoryInterface interface {
