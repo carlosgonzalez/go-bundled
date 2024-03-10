@@ -1,6 +1,6 @@
 [![CI](https://github.com/carlosgonzalez/go-bundled/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/carlosgonzalez/go-bundled/actions/workflows/ci.yml)
 
-# Simple Golang Setup with Echo, GORM and Testify
+# Simple Golang Setup with Echo, GORM, Testify and Mockery
 
 ## Description
 
@@ -55,7 +55,7 @@ go-bundled/
 
 ### Testing
 
-Learn how to write unit tests for your Go code to ensure reliability with Testify and mocks.
+Learn how to write unit tests for your Go code to ensure reliability with Testify and Mockery.
 
 ### CI
 
@@ -68,13 +68,13 @@ Make sure you have Go installed on your system. If not, download it from [here](
 Clone this repository:
 
 ```bash
-git clone git@github.com:carlosgonzalez/learning-go.git
+git clone git@github.com:carlosgonzalez/go-bundled.git
 ```
 
 Navigate to the project directory:
 
 ```bash
-cd learning-go
+cd go-bundled
 ```
 
 Install dependencies:
@@ -113,6 +113,12 @@ otherwise simply run with
 
 ```bash
 go run .
+```
+
+Generate mocks with Mockery
+
+```bash
+mockery --all
 ```
 
 # Contributing
