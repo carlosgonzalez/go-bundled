@@ -22,10 +22,10 @@ func NewUserHandler(repo repositories.UserRepositoryInterface) userHandler {
 func (uHandler *userHandler) CreateUser(c echo.Context) error {
 	u := &models.User{}
 	if err := c.Bind(u); err != nil {
-		return err
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "unable to bind user, check the payload"})
 	}
 	if err := c.Validate(u); err != nil {
-		return err
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "unable to validate user, check the payload"})
 	}
 	err := uHandler.repo.CreateUser(u)
 	if err != nil {
