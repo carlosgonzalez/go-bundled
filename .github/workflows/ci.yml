@@ -43,6 +43,12 @@ jobs:
         with:
           go-version: "1.22"
 
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install dependencies
         run: go get .
 
@@ -52,8 +58,5 @@ jobs:
 
       - run: mockery --all
 
-      - name: Install dependencies
-        run: go get .
-
       - name: Test with the Go CLI
-        run: go test -v ./...
+        run: task test
