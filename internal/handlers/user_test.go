@@ -68,7 +68,7 @@ func TestUserHandler_CreateUserFailsForInvalidPayload(t *testing.T) {
 func getContextForRoute(endpoint string, method string) (echo.Context, *httptest.ResponseRecorder) {
 	e := echo.New()
 	e.Validator = validators.NewCustomValidator()
-	req := httptest.NewRequest(http.MethodPost, "/users", strings.NewReader(userJSON))
+	req := httptest.NewRequest(method, endpoint, strings.NewReader(userJSON))
 	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
