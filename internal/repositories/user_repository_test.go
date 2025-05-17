@@ -76,7 +76,7 @@ func (s *Suite) Test_GetUser() {
 		WillReturnRows(sqlmock.NewRows([]string{"id", "name"}).
 			AddRow(id, name))
 
-	err, res := s.repository.GetUser("1")
+	res, err := s.repository.GetUser("1")
 
 	require.NoError(s.T(), err)
 
@@ -102,7 +102,7 @@ func (s *Suite) Test_GetAllUsers() {
 				AddRow(id2, name2),
 		)
 
-	err, res := s.repository.GetAllUsers()
+	res, err := s.repository.GetAllUsers()
 
 	require.NoError(s.T(), err)
 	assert.Equal(s.T(), 2, len(res))
@@ -145,7 +145,7 @@ func (s *Suite) Test_UpdateUser() {
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	s.mock.ExpectCommit()
 
-	err, updatedUser := s.repository.UpdateUser(oldUser, newUser)
+	updatedUser, err := s.repository.UpdateUser(oldUser, newUser)
 
 	require.NoError(s.T(), err)
 
