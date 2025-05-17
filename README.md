@@ -83,10 +83,10 @@ Install dependencies:
 go mod tidy
 ```
 
-Mockery
+Mockery, Task and Linter
 
 ```bash
-brew install mockery
+brew install mockery golangci-lint go-task/tap/go-task
 ```
 
 Install `air` if you want to have live-reload capabilities
@@ -118,7 +118,7 @@ go run .
 Generate mocks with Mockery
 
 ```bash
-mockery --all
+mockery
 ```
 
 # Contributing
