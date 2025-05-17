@@ -23,7 +23,7 @@ jobs:
         with:
           mockery-version: "3.2.5"
 
-      - run: mockery --all
+      - run: mockery
 
       - name: Linter
         uses: golangci/golangci-lint-action@v3
@@ -56,7 +56,7 @@ jobs:
         with:
           mockery-version: "2.42.0"
 
-      - run: mockery --all
+      - run: mockery
 
       - name: Test with the Go CLI
         run: task test
