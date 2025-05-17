@@ -54,7 +54,7 @@ jobs:
 
       - uses: brokeyourbike/go-mockery-action@v0
         with:
-          mockery-version: "2.42.0"
+          mockery-version: "3.2.5"
 
       - run: mockery
 
