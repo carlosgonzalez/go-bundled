@@ -86,7 +86,7 @@ go mod tidy
 Mockery
 
 ```bash
-go install github.com/vektra/mockery/v2@v2.42.0
+brew install mockery
 ```
 
 Install `air` if you want to have live-reload capabilities
