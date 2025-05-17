@@ -1,5 +1,0 @@
-dir: "mocks"
-mockname: "Mock{{.InterfaceName}}"
-outpkg: "mocks"
-packages:
-  github.com/carlosgonzalez/go-bundled/internal/repositories:

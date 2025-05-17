@@ -15,23 +15,22 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 	}
 }
 
-func (uRepo UserRepository) GetUser(id string) (error, models.User) {
+func (uRepo UserRepository) GetUser(id string) (models.User, error) {
 	var user models.User
 	if err := uRepo.db.First(&user, id).Error; err != nil {
-		return err, user
+		return user, err
 	}
-	return nil, user
-
+	return user, nil
 }
 
-func (uRepo UserRepository) GetAllUsers() (error, []*models.User) {
+func (uRepo UserRepository) GetAllUsers() ([]*models.User, error) {
 	users := []*models.User{}
 	tx := uRepo.db.Find(&users)
 	if tx.Error != nil {
-		return tx.Error, nil
+		return nil, tx.Error
 	}
 
-	return nil, users
+	return users, nil
 }
 
 func (uRepo UserRepository) CreateUser(user *models.User) error {
@@ -43,12 +42,12 @@ func (uRepo UserRepository) CreateUser(user *models.User) error {
 	return nil
 }
 
-func (uRepo UserRepository) UpdateUser(oldUser *models.User, newUser *models.User) (error, *models.User) {
+func (uRepo UserRepository) UpdateUser(oldUser *models.User, newUser *models.User) (*models.User, error) {
 	tx := uRepo.db.Model(&oldUser).Updates(models.User{Name: newUser.Name})
 	if tx.Error != nil {
-		return tx.Error, nil
+		return nil, tx.Error
 	}
-	return nil, oldUser
+	return oldUser, nil
 }
 
 func (uRepo UserRepository) DeleteUser(user *models.User) error {

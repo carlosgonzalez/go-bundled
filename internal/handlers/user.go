@@ -36,7 +36,7 @@ func (uHandler *userHandler) CreateUser(c echo.Context) error {
 }
 
 func (uHandler *userHandler) GetUser(c echo.Context) error {
-	err, user := uHandler.repo.GetUser(c.Param("id"))
+	user, err := uHandler.repo.GetUser(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
 	}
@@ -44,7 +44,7 @@ func (uHandler *userHandler) GetUser(c echo.Context) error {
 }
 
 func (uHandler *userHandler) UpdateUser(c echo.Context) error {
-	err, existingUser := uHandler.repo.GetUser(c.Param("id"))
+	existingUser, err := uHandler.repo.GetUser(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
 	}
@@ -54,7 +54,7 @@ func (uHandler *userHandler) UpdateUser(c echo.Context) error {
 		return err
 	}
 
-	err, u := uHandler.repo.UpdateUser(&existingUser, user)
+	u, err := uHandler.repo.UpdateUser(&existingUser, user)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "unable to update user"})
 	}
@@ -62,7 +62,7 @@ func (uHandler *userHandler) UpdateUser(c echo.Context) error {
 }
 
 func (uHandler *userHandler) DeleteUser(c echo.Context) error {
-	err, existingUser := uHandler.repo.GetUser(c.Param("id"))
+	existingUser, err := uHandler.repo.GetUser(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "user not found"})
 	}
@@ -75,7 +75,7 @@ func (uHandler *userHandler) DeleteUser(c echo.Context) error {
 }
 
 func (uHandler *userHandler) GetAllUsers(c echo.Context) error {
-	err, users := uHandler.repo.GetAllUsers()
+	users, err := uHandler.repo.GetAllUsers()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
