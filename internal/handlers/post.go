@@ -25,7 +25,7 @@ func (pHandler *postHandler) CreatePost(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "unable to fetch posts"})
 	}
 
-	pHandler.db.Create(&posts)
+	pHandler.db.Create(posts)
 
 	return c.JSON(http.StatusOK, posts)
 }
