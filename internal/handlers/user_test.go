@@ -10,7 +10,7 @@ import (
 
 	"github.com/carlosgonzalez/go-bundled/internal/handlers"
 	"github.com/carlosgonzalez/go-bundled/internal/models"
-	"github.com/carlosgonzalez/go-bundled/mocks"
+	repo_mocks "github.com/carlosgonzalez/go-bundled/mocks"
 	"github.com/carlosgonzalez/go-bundled/pkg/validators"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
@@ -24,7 +24,7 @@ var (
 func TestUserHandler_CreateUserSucceedsForValidPayload(t *testing.T) {
 	c, rec := getContextForRoute("/users", http.MethodPost)
 
-	repo := &mocks.MockUserRepositoryInterface{}
+	repo := &repo_mocks.MockUserRepositoryInterface{}
 	repo.On("CreateUser", mock.AnythingOfType("*models.User")).
 		Return(nil).
 		Once()
@@ -51,7 +51,7 @@ func TestUserHandler_CreateUserSucceedsForValidPayload(t *testing.T) {
 func TestUserHandler_CreateUserFailsForInvalidPayload(t *testing.T) {
 	c, rec := getContextForRoute("/users", http.MethodPost)
 
-	repo := &mocks.MockUserRepositoryInterface{}
+	repo := &repo_mocks.MockUserRepositoryInterface{}
 	repo.On("CreateUser", mock.AnythingOfType("*models.User")).
 		Return(errors.New("something went wrong")).
 		Once()

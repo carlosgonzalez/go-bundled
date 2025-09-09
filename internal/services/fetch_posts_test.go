@@ -20,7 +20,8 @@ func TestFetchUrl(t *testing.T) {
 				"title":  "Test Title",
 				"body":   "Test Body",
 			}
-			json.NewEncoder(w).Encode(response)
+			err := json.NewEncoder(w).Encode(response)
+			assert.NoError(t, err)
 		}))
 		defer server.Close()
 
@@ -57,7 +58,8 @@ func TestFetchUrl(t *testing.T) {
 	t.Run("bad json", func(t *testing.T) {
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(`{"id":1, "title":"test",`)) // malformed json
+			_, err := w.Write([]byte(`{"id":1, "title":"test",`)) // malformed json
+			assert.NoError(t, err)
 		}))
 		defer server.Close()
 
@@ -78,7 +80,8 @@ func TestFetcher(t *testing.T) {
 				"title":  "Test Title",
 				"body":   "Test Body",
 			}
-			json.NewEncoder(w).Encode(response)
+			err := json.NewEncoder(w).Encode(response)
+			assert.NoError(t, err)
 		}))
 		defer server.Close()
 

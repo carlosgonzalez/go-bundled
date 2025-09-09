@@ -54,15 +54,18 @@ var Fetcher = func(baseURL string, resource string, totalRecords int) ([]models.
 }
 
 // FetchUrl fetches a single post from the given resource. It is exported for testing purposes.
-var FetchUrl = func(client *http.Client, baseURL string, resource string, postNumber int) (models.Post, error) {
-	var post models.Post
+var FetchUrl = func(client *http.Client, baseURL string, resource string, postNumber int) (post models.Post, err error) {
 	requestURL := fmt.Sprintf("%s/%s/%d", baseURL, resource, postNumber)
 
 	resp, err := client.Get(requestURL)
 	if err != nil {
 		return post, fmt.Errorf("error making http request: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if closeErr := resp.Body.Close(); closeErr != nil && err == nil {
+			err = fmt.Errorf("error closing response body: %w", closeErr)
+		}
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return post, fmt.Errorf("unexpected status code: %d", resp.StatusCode)

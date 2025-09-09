@@ -26,6 +26,10 @@ func TestCreatePost(t *testing.T) {
 
 		db, mock, err := sqlmock.New()
 		assert.NoError(t, err)
+
+		defer func() {
+			assert.NoError(t, mock.ExpectationsWereMet())
+		}()
 		defer db.Close()
 
 		gormDB, err := gorm.Open(postgres.New(postgres.Config{
@@ -52,12 +56,12 @@ func TestCreatePost(t *testing.T) {
 			).
 			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1).AddRow(2))
 		mock.ExpectCommit()
+		mock.ExpectClose()
 
 		err = handler.CreatePost(c)
 
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, rec.Code)
-		assert.NoError(t, mock.ExpectationsWereMet())
 
 		var posts []models.Post
 		err = json.Unmarshal(rec.Body.Bytes(), &posts)
@@ -72,8 +76,12 @@ func TestCreatePost(t *testing.T) {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
-		db, _, err := sqlmock.New()
+		db, mock, err := sqlmock.New()
 		assert.NoError(t, err)
+
+		defer func() {
+			assert.NoError(t, mock.ExpectationsWereMet())
+		}()
 		defer db.Close()
 
 		gormDB, err := gorm.Open(postgres.New(postgres.Config{
@@ -88,6 +96,8 @@ func TestCreatePost(t *testing.T) {
 		services.Fetcher = func(baseURL string, resource string, totalRecords int) ([]models.Post, error) {
 			return nil, errors.New("fetcher error")
 		}
+
+		mock.ExpectClose()
 
 		err = handler.CreatePost(c)
 
