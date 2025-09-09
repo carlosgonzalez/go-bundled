@@ -1,8 +1,7 @@
+dir: mocks
+outpkg: mocks
+filename: "mock_{{.InterfaceName}}.go"
 packages:
   github.com/carlosgonzalez/go-bundled/internal/repositories:
-    config:
-      dir: mocks
-      filename: "mock_{{.InterfaceName}}.go"
-      outpkg: mocks
     interfaces:
       UserRepositoryInterface:
