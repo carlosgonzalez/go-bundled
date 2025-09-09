@@ -30,7 +30,9 @@ func TestCreatePost(t *testing.T) {
 		defer func() {
 			assert.NoError(t, mock.ExpectationsWereMet())
 		}()
-		defer db.Close()
+		defer func() {
+			assert.NoError(t, db.Close())
+		}()
 
 		gormDB, err := gorm.Open(postgres.New(postgres.Config{
 			Conn: db,
@@ -82,7 +84,9 @@ func TestCreatePost(t *testing.T) {
 		defer func() {
 			assert.NoError(t, mock.ExpectationsWereMet())
 		}()
-		defer db.Close()
+		defer func() {
+			assert.NoError(t, db.Close())
+		}()
 
 		gormDB, err := gorm.Open(postgres.New(postgres.Config{
 			Conn: db,
