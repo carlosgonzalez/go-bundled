@@ -4,62 +4,81 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"math/rand"
 	"net/http"
-	"os"
 	"sync"
 
 	"github.com/carlosgonzalez/go-bundled/internal/models"
 )
 
-func Fetcher(resource string, totalRecords int) ([]models.Post, error) {
+var Fetcher = func(baseURL string, resource string, totalRecords int) ([]models.Post, error) {
 
-	c := make(chan models.Post, totalRecords)
+	postsChan := make(chan models.Post, totalRecords)
+	errChan := make(chan error, totalRecords)
 	wg := sync.WaitGroup{}
+	client := &http.Client{}
 
 	wg.Add(totalRecords)
 	for i := 1; i <= totalRecords; i++ {
-		go fetchUrl(resource, c, &wg)
+		go func() {
+			defer wg.Done()
+			postNumber := rand.Intn(100)
+			if postNumber == 0 {
+				postNumber = 1
+			}
+			post, err := FetchUrl(client, baseURL, resource, postNumber)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			postsChan <- post
+		}()
 	}
 
 	wg.Wait()
-	close(c)
+	close(postsChan)
+	close(errChan)
+
+	for err := range errChan {
+		if err != nil {
+			return nil, err
+		}
+	}
 
 	var posts []models.Post
-	for post := range c {
+	for post := range postsChan {
 		posts = append(posts, post)
 	}
 
 	return posts, nil
 }
 
-func fetchUrl(resource string, c chan models.Post, wg *sync.WaitGroup) {
-	postNumber := rand.Intn(100)
-	requestURL := fmt.Sprintf("https://jsonplaceholder.typicode.com/%s/%d", resource, postNumber)
-
-	resp, err := http.Get(requestURL)
-	if err != nil {
-		log.Fatalf("error making http request: %s\n", err)
-		os.Exit(1)
-	}
-
+// FetchUrl fetches a single post from the given resource. It is exported for testing purposes.
+var FetchUrl = func(client *http.Client, baseURL string, resource string, postNumber int) (models.Post, error) {
 	var post models.Post
+	requestURL := fmt.Sprintf("%s/%s/%d", baseURL, resource, postNumber)
+
+	resp, err := client.Get(requestURL)
+	if err != nil {
+		return post, fmt.Errorf("error making http request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return post, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln(err)
-		os.Exit(1)
+		return post, fmt.Errorf("error reading response body: %w", err)
 	}
 
 	if err := json.Unmarshal(body, &post); err != nil {
-		log.Fatalln(err)
-		os.Exit(1)
+		return post, fmt.Errorf("error unmarshaling json: %w", err)
 	}
 
 	//to not mess with the autoincrementing ID from the DB
 	post.ID = 0
 
-	c <- post
-	wg.Done()
+	return post, nil
 }

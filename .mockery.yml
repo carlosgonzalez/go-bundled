@@ -3,6 +3,6 @@ packages:
     config:
       dir: mocks
       filename: "mock_{{.InterfaceName}}.go"
-      pkgname: mocks
+      outpkg: mocks
     interfaces:
       UserRepositoryInterface:
