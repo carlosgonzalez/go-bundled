@@ -20,14 +20,12 @@ func NewPostHandler(db *gorm.DB) *postHandler {
 }
 
 func (pHandler *postHandler) CreatePost(c echo.Context) error {
-	posts, err := services.Fetcher("posts", 50)
+	posts, err := services.Fetcher("https://jsonplaceholder.typicode.com", "posts", 50)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "unable to fetch posts"})
 	}
 
-	for _, post := range posts {
-		pHandler.db.Create(&post)
-	}
+	pHandler.db.Create(posts)
 
 	return c.JSON(http.StatusOK, posts)
 }
