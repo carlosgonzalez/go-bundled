@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
 	github.com/go-playground/validator v9.31.0+incompatible
-	github.com/labstack/echo/v4 v4.15.0
+	github.com/labstack/echo/v4 v4.15.1
 	github.com/stretchr/testify v1.11.1
 	gorm.io/gorm v1.31.1
 )
